@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Atlanta Technical College Course Syllabi</title>
+<style>
+    :root {
+      --atc-navy: #123f72;
+      --atc-blue: #1f5f99;
+      --atc-gold: #f4c430;
+      --atc-gold-dark: #d5a900;
+      --atc-light-blue: #eef4f9;
+      --atc-light-gray: #f6f7f8;
+      --atc-border: #d7dfe7;
+      --atc-text: #222222;
+      --atc-muted: #555555;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--atc-text);
+      background: var(--white);
+      line-height: 1.4;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 26px 26px 34px;
+    }
+
+    h1 {
+      margin: 0;
+      padding-bottom: 9px;
+      color: var(--atc-navy);
+      font-size: 2rem;
+      line-height: 1.15;
+      font-weight: 700;
+      border-bottom: 5px solid var(--atc-gold);
+    }
+
+    .sub {
+      margin: 12px 0 16px;
+      max-width: 900px;
+      color: var(--atc-muted);
+      font-size: 0.98rem;
+    }
+
+    .search-wrap {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--atc-light-blue);
+      border-left: 5px solid var(--atc-navy);
+    }
+
+    #searchBox {
+      width: 100%;
+      max-width: 760px;
+      padding: 10px 12px;
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #222222 !important;
+      -webkit-text-fill-color: #222222 !important;
+      caret-color: #222222;
+      background: #ffffff !important;
+      border: 2px solid var(--atc-blue);
+      border-radius: 3px;
+      opacity: 1;
+    }
+
+    #searchBox::placeholder {
+      color: #6b7280 !important;
+      -webkit-text-fill-color: #6b7280 !important;
+      opacity: 1;
+    }
+
+    #searchBox:focus {
+      outline: 3px solid var(--atc-gold);
+      outline-offset: 2px;
+      border-color: var(--atc-navy);
+    }
+
+    .alphabet-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      margin: 0 0 18px;
+    }
+
+    .letter-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--atc-navy);
+      background: var(--white);
+      border: 1px solid var(--atc-border);
+      border-bottom: 3px solid var(--atc-gold);
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .letter-link:hover,
+    .letter-link:focus {
+      color: var(--white);
+      background: var(--atc-navy);
+      border-color: var(--atc-navy);
+      text-decoration: none;
+    }
+
+    #departmentDirectory {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .letter-group {
+      margin: 0;
+      padding: 0;
+      background: var(--white);
+      border: 1px solid var(--atc-border);
+      border-radius: 5px;
+      box-shadow: 0 2px 7px rgba(18, 63, 114, 0.08);
+      overflow: hidden;
+      scroll-margin-top: 12px;
+    }
+
+    .letter-heading {
+      margin: 0;
+      padding: 9px 12px;
+      color: var(--white);
+      background: var(--atc-navy);
+      border-left: 6px solid var(--atc-gold);
+      font-size: 1rem;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .department-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .department-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+      padding: 10px 10px 9px;
+      background: var(--atc-light-gray);
+      border: 1px solid #e3e8ed;
+      border-top: 3px solid var(--atc-gold);
+      border-radius: 4px;
+      box-shadow: none;
+    }
+
+    .department-card:hover {
+      background: var(--white);
+      border-color: #cbd5df;
+      border-top-color: var(--atc-navy);
+      box-shadow: 0 2px 6px rgba(18, 63, 114, 0.10);
+    }
+
+    .department-name {
+      color: var(--atc-navy);
+      font-size: 0.93rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .department-link {
+      display: inline-block;
+      width: fit-content;
+      padding: 5px 8px;
+      color: var(--atc-navy);
+      background: var(--atc-gold);
+      border: 1px solid var(--atc-gold-dark);
+      border-radius: 3px;
+      font-size: 0.79rem;
+      font-weight: 700;
+      line-height: 1.15;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .department-link:hover,
+    .department-link:focus {
+      color: var(--white);
+      background: var(--atc-navy);
+      border-color: var(--atc-navy);
+      text-decoration: none;
+    }
+
+    .department-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .department-links .department-link {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .no-results {
+      display: none;
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 14px;
+      color: var(--atc-navy);
+      background: #fff9df;
+      border-left: 5px solid var(--atc-gold);
+      font-weight: 600;
+    }
+
+    .concourse-note {
+      margin-top: 20px;
+      padding: 11px 13px;
+      color: var(--atc-muted);
+      background: var(--atc-light-gray);
+      border-top: 3px solid var(--atc-navy);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 900px) {
+      #departmentDirectory {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .page {
+        padding: 20px 14px 28px;
+      }
+
+      h1 {
+        font-size: 1.65rem;
+      }
+
+      .department-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+</style>
+</head>
+<body>
+<main class="page">
+<h1>Atlanta Technical College Course Syllabi</h1>
+<p class="sub">Select a program below to access course syllabi.</p>
+<div class="search-wrap">
+<input aria-label="Search by program or course number" autocomplete="off" id="searchBox" placeholder="Search by program or course number" type="text"/>
+</div>
+<nav aria-label="Department alphabetical navigation" class="alphabet-nav">
+<a class="letter-link" href="#group-A">A</a><a class="letter-link" href="#group-B">B</a><a class="letter-link" href="#group-C">C</a><a class="letter-link" href="#group-D">D</a><a class="letter-link" href="#group-E">E</a><a class="letter-link" href="#group-F">F</a><a class="letter-link" href="#group-G">G</a><a class="letter-link" href="#group-H">H</a><a class="letter-link" href="#group-I">I</a><a class="letter-link" href="#group-L">L</a><a class="letter-link" href="#group-M">M</a><a class="letter-link" href="#group-N">N</a><a class="letter-link" href="#group-P">P</a><a class="letter-link" href="#group-R">R</a><a class="letter-link" href="#group-S">S</a><a class="letter-link" href="#group-W">W</a>
+</nav>
+<div id="departmentDirectory">
+<section class="letter-group" data-letter="A" id="group-A"><h2 class="letter-heading">A</h2><div class="department-grid">
+<article class="department-card" data-courses="ACCT1100 ACCT1105 ACCT1115 ACCT1120 ACCT1125 ACCT1130 ACCT1140 ACCT2000 ACCT2100 ACCT2105 ACCT2120 ACCT2125 ACCT2135 ACCT2140 ACCT2145" data-department="accounting" data-prefixes="ACCT" data-search="accounting acct1100 acct1105 acct1115 acct1120 acct1125 acct1130 acct1140 acct2000 acct2100 acct2105 acct2120 acct2125 acct2135 acct2140 acct2145 acct">
+<div class="department-name">Accounting</div>
+<a aria-label="View Accounting syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ACCT&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="AIRC1005 AIRC1010 AIRC1020 AIRC1030 AIRC1040 AIRC1050 AIRC1060 AIRC1070 AIRC1080 AIRC1090 PPFT1070" data-department="air conditioning technology" data-prefixes="AIRC" data-search="airconditioningtechnology airc1005 airc1010 airc1020 airc1030 airc1040 airc1050 airc1060 airc1070 airc1080 airc1090 ppft1070 airc">
+<div class="department-name">Air Conditioning Technology</div>
+<a aria-label="View Air Conditioning Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=AIRC&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ALHS1010 ALHS1011 ALHS1015 ALHS1040 ALHS1060 ALHS1090 ALHS1100 ALHS1126" data-department="allied health sciences" data-prefixes="ALHS" data-search="alliedhealthsciences alhs1010 alhs1011 alhs1015 alhs1040 alhs1060 alhs1090 alhs1100 alhs1126 alhs">
+<div class="department-name">Allied Health Sciences</div>
+<a aria-label="View Allied Health Sciences syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ALHS&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ARTS1101" data-department="art" data-prefixes="ARTS" data-search="art arts1101 arts">
+<div class="department-name">Art</div>
+<a aria-label="View Art syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ARTS&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ACRP1000 ACRP1005 ACRP1010 ACRP1015 ACRP1017 ACRP1019 ACRP2001 ACRP2002 ACRP2009 ACRP2010 ACRP2015 ACRP2019" data-department="automotive collision repair" data-prefixes="ACRP" data-search="automotivecollisionrepair acrp1000 acrp1005 acrp1010 acrp1015 acrp1017 acrp1019 acrp2001 acrp2002 acrp2009 acrp2010 acrp2015 acrp2019 acrp">
+<div class="department-name">Automotive Collision Repair</div>
+<a aria-label="View Automotive Collision Repair syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ACRP&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="AUTT1010 AUTT1020 AUTT1030 AUTT1040 AUTT1050 AUTT1060 AUTT2010 AUTT2020 AUTT2030" data-department="automotive technology" data-prefixes="AUTT" data-search="automotivetechnology autt1010 autt1020 autt1030 autt1040 autt1050 autt1060 autt2010 autt2020 autt2030 autt">
+<div class="department-name">Automotive Technology</div>
+<a aria-label="View Automotive Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=AUTT&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="AVMT1000 AVMT1001 AVMT1010 AVMT1011 AVMT1020 AVMT1021 AVMT1025 AVMT1026 AVMT1030 AVMT1031 AVMT1210 AVMT1211 AVMT2011 AVMT2020 AVMT2021 AVMT2025 AVMT2026 AVMT2030 AVMT2040 AVMT2041 AVMT2050 AVMT2051 AVMT2060 AVMT2061 AVMT2070 AVMT2071 AVMT2080 AVMT2081 AVMT2086 AVMT2090 AVMT2091 AVMT2095 AVMT2096 AVMT2211 AVMT2231 AVMT2251 AVMT2261 AVMT2271 AVMT2276 AVMT2281 AVMT2286" data-department="aviation maintenance technology" data-prefixes="AVMT" data-search="aviationmaintenancetechnology avmt1000 avmt1001 avmt1010 avmt1011 avmt1020 avmt1021 avmt1025 avmt1026 avmt1030 avmt1031 avmt1210 avmt1211 avmt2011 avmt2020 avmt2021 avmt2025 avmt2026 avmt2030 avmt2040 avmt2041 avmt2050 avmt2051 avmt2060 avmt2061 avmt2070 avmt2071 avmt2080 avmt2081 avmt2086 avmt2090 avmt2091 avmt2095 avmt2096 avmt2211 avmt2231 avmt2251 avmt2261 avmt2271 avmt2276 avmt2281 avmt2286 avmt">
+<div class="department-name">Aviation Maintenance Technology</div>
+<a aria-label="View Aviation Maintenance Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=AVMT&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="AVIO1000 AVIO1010 AVIO1015 AVIO1020 AVIO1025 AVIO1030 AVIO1040 AVIO1060 AVIO1070 AVIO1080 AVIO1090 AVIO2000 AVIO2010 AVIO2020" data-department="avionics maintenance" data-prefixes="AVIO" data-search="avionicsmaintenance avio1000 avio1010 avio1015 avio1020 avio1025 avio1030 avio1040 avio1060 avio1070 avio1080 avio1090 avio2000 avio2010 avio2020 avio">
+<div class="department-name">Avionics Maintenance</div>
+<a aria-label="View Avionics Maintenance syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=AVIO&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="B" id="group-B"><h2 class="letter-heading">B</h2><div class="department-grid">
+<article class="department-card" data-courses="BARB1000 BARB1010 BARB1022 BARB1024 BARB1030 BARB1040 BARB1050 BARB1060 BARB1070 BARB1072 BARB1074 BARB1080 BARB1082 BARB1084 BARB1090 BARB1100 BARB1110 BARB2010 BARB2020 BARB2030 BARB2040 BARB2050 BARB2060" data-department="barbering" data-prefixes="BARB" data-search="barbering barb1000 barb1010 barb1022 barb1024 barb1030 barb1040 barb1050 barb1060 barb1070 barb1072 barb1074 barb1080 barb1082 barb1084 barb1090 barb1100 barb1110 barb2010 barb2020 barb2030 barb2040 barb2050 barb2060 barb">
+<div class="department-name">Barbering</div>
+<a aria-label="View Barbering syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=BARB&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="BIOL1111 BIOL2113 BIOL2113L BIOL2114 BIOL2114L BIOL2117 BIOL2117L BIOL2210 BIOL2210L BIOL2250 BIOL2300" data-department="biology" data-prefixes="BIOL" data-search="biology biol1111 biol2113 biol2113l biol2114 biol2114l biol2117 biol2117l biol2210 biol2210l biol2250 biol2300 biol">
+<div class="department-name">Biology</div>
+<a aria-label="View Biology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=BIOL&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="BSCI1111 BSCI1211 BSCI1212 BSCI1220 BSCI1230 BSCI1240 BSCI2220 BSCI2230 BSCI2290" data-department="bioscience" data-prefixes="BSCI" data-search="bioscience bsci1111 bsci1211 bsci1212 bsci1220 bsci1230 bsci1240 bsci2220 bsci2230 bsci2290 bsci">
+<div class="department-name">Bioscience</div>
+<a aria-label="View Bioscience syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=BSCI&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="BUSN1015 BUSN1100 BUSN1190 BUSN1240 BUSN1250 BUSN1300 BUSN1340 BUSN1400 BUSN1410 BUSN1420 BUSN1430 BUSN1440 BUSN1450 BUSN1460 BUSN1470 BUSN2130 BUSN2140 BUSN2150 BUSN2160 BUSN2190 BUSN2200 BUSN2210 BUSN2240 BUSN2250 BUSN2290 BUSN2370" data-department="business technology" data-prefixes="BUSN" data-search="businesstechnology busn1015 busn1100 busn1190 busn1240 busn1250 busn1300 busn1340 busn1400 busn1410 busn1420 busn1430 busn1440 busn1450 busn1460 busn1470 busn2130 busn2140 busn2150 busn2160 busn2190 busn2200 busn2210 busn2240 busn2250 busn2290 busn2370 busn">
+<div class="department-name">Business Technology</div>
+<a aria-label="View Business Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=BUSN&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="C" id="group-C"><h2 class="letter-heading">C</h2><div class="department-grid">
+<article class="department-card" data-courses="CARP1000 CARP1015 CARP1020 CARP1025 CARP1035 CARP1055 CARP1056 CARP1070 CARP1105 CARP1110 CARP1112 CARP1114 CARP1190 CARP1260 CARP1310 CARP1320 CARP1340 CARP1400 CARP1405 CARP1410 CARP1415" data-department="carpentry" data-prefixes="CARP" data-search="carpentry carp1000 carp1015 carp1020 carp1025 carp1035 carp1055 carp1056 carp1070 carp1105 carp1110 carp1112 carp1114 carp1190 carp1260 carp1310 carp1320 carp1340 carp1400 carp1405 carp1410 carp1415 carp">
+<div class="department-name">Carpentry</div>
+<a aria-label="View Carpentry syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CARP&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="CSSP1010 CSSP1020 CSSP1022 CTDL1010 CTDL1020 CTDL1030" data-department="central sterile supply processing" data-prefixes="CSSP" data-search="centralsterilesupplyprocessing cssp1010 cssp1020 cssp1022 ctdl1010 ctdl1020 ctdl1030 cssp">
+<div class="department-name">Central Sterile Supply Processing</div>
+<a aria-label="View Central Sterile Supply Processing syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CSSP&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="CWDS1540 CWDS1560 CWDS1580 CWDS1600 CWDS1620" data-department="certified warehousing" data-prefixes="CWDS" data-search="certifiedwarehousing cwds1540 cwds1560 cwds1580 cwds1600 cwds1620 cwds">
+<div class="department-name">Certified Warehousing</div>
+<a aria-label="View Certified Warehousing syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CWDS&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="CHEM1151 CHEM1151L CHEM1211 CHEM1211L CHEM1212 CHEM1212L CHEM2211 CHEM2211L CHEM2212 CHEM2212L CHEM2300 CHEM2300L" data-department="chemistry" data-prefixes="CHEM" data-search="chemistry chem1151 chem1151l chem1211 chem1211l chem1212 chem1212l chem2211 chem2211l chem2212 chem2212l chem2300 chem2300l chem">
+<div class="department-name">Chemistry</div>
+<a aria-label="View Chemistry syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CHEM&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+<article class="department-card" data-courses="DRFT2000 DRFT2005 DRFT2010 DRFT2020 DRFT2030 DRFT2040 DRFT2050 DRFT2060 DRFT2070" data-department="civil drafting specialization" data-prefixes="DRFT" data-search="civildraftingspecialization drft2000 drft2005 drft2010 drft2020 drft2030 drft2040 drft2050 drft2060 drft2070 drft">
+<div class="department-name">Civil Drafting Specialization</div>
+<a aria-label="View Civil Drafting Specialization syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DRFT&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+<article class="department-card" data-courses="CETC1111 CETC1112 CETC1113 CETC1114 CETC1115 CETC1116 CETC1117 CETC1118 CETC1119 CETC1120 CETC1121 MEGT2030 MEGT2080" data-department="civil engineering technology" data-prefixes="CETC" data-search="civilengineeringtechnology cetc1111 cetc1112 cetc1113 cetc1114 cetc1115 cetc1116 cetc1117 cetc1118 cetc1119 cetc1120 cetc1121 megt2030 megt2080 cetc">
+<div class="department-name">Civil Engineering Technology</div>
+<a aria-label="View Civil Engineering Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CETC&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+<article class="department-card" data-courses="CIST1001 CIST1121 CIST1122 CIST1130 CIST1200 CIST1210 CIST1220 CIST1305 CIST1401 CIST1510 CIST1601 CIST1602 CIST2122 CIST2212 CIST2214 CIST2216 CIST2222 CIST2224 CIST2311 CIST2312 CIST2313 CIST2341 CIST2342 CIST2343 CIST2351 CIST2352 CIST2361 CIST2362 CIST2371 CIST2372 CIST2373 CIST2381 CIST2411 CIST2412 CIST2413 CIST2414 CIST2420 CIST2431 CIST2432 CIST2433 CIST2434 CIST2451 CIST2452 CIST2453 CIST2454 CIST2480 CIST2481 CIST2482 CIST2483 CIST2484 CIST2601 CIST2602 CIST2611 CIST2612 CIST2613 CIST2742 CIST2921 COMP1000" data-department="computer information systems" data-prefixes="CIST COMP" data-search="computerinformationsystems cist1001 cist1121 cist1122 cist1130 cist1200 cist1210 cist1220 cist1305 cist1401 cist1510 cist1601 cist1602 cist2122 cist2212 cist2214 cist2216 cist2222 cist2224 cist2311 cist2312 cist2313 cist2341 cist2342 cist2343 cist2351 cist2352 cist2361 cist2362 cist2371 cist2372 cist2373 cist2381 cist2411 cist2412 cist2413 cist2414 cist2420 cist2431 cist2432 cist2433 cist2434 cist2451 cist2452 cist2453 cist2454 cist2480 cist2481 cist2482 cist2483 cist2484 cist2601 cist2602 cist2611 cist2612 cist2613 cist2742 cist2921 comp1000 cist comp">
+<div class="department-name">Computer Information Systems</div>
+<div class="department-links"><a aria-label="View Computer Information Systems CIST syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CIST&amp;template=templates" rel="noopener noreferrer" target="_blank">CIST Syllabi</a><a aria-label="View Computer Information Systems COMP syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=COMP&amp;template=templates" rel="noopener noreferrer" target="_blank">COMP Syllabi</a></div></article>
+<article class="department-card" data-courses="CCMN1050 CCMN1060 CCMN2010 CCMN2200 CMTT2010 CMTT2020 CMTT2050 CMTT2130 CMTT2170 COFC1000 COFC1010 COFC1011 COFC1020 COFC1030 COFC1050 COFC1080 COMM1109" data-department="construction management" data-prefixes="CCMN CMTT COFC" data-search="constructionmanagement ccmn1050 ccmn1060 ccmn2010 ccmn2200 cmtt2010 cmtt2020 cmtt2050 cmtt2130 cmtt2170 cofc1000 cofc1010 cofc1011 cofc1020 cofc1030 cofc1050 cofc1080 comm1109 ccmn cmtt cofc">
+<div class="department-name">Construction Management</div>
+<div class="department-links"><a aria-label="View Construction Management CCMN syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CCMN&amp;template=templates" rel="noopener noreferrer" target="_blank">CCMN Syllabi</a><a aria-label="View Construction Management CMTT syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CMTT&amp;template=templates" rel="noopener noreferrer" target="_blank">CMTT Syllabi</a><a aria-label="View Construction Management COFC syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=COFC&amp;template=templates" rel="noopener noreferrer" target="_blank">COFC Syllabi</a></div></article>
+<article class="department-card" data-courses="COSM1000 COSM1010 COSM1020 COSM1030 COSM1040 COSM1050 COSM1060 COSM1070 COSM1080 COSM1090 COSM1100 COSM1110 COSM1115 COSM1120 COSM1125 COSM1180 COSM1190 COSM2000 COSM2010 COSM2020 COSM2030 COSM2040 COSM2050 COSM2060 COSM2070" data-department="cosmetology" data-prefixes="COSM" data-search="cosmetology cosm1000 cosm1010 cosm1020 cosm1030 cosm1040 cosm1050 cosm1060 cosm1070 cosm1080 cosm1090 cosm1100 cosm1110 cosm1115 cosm1120 cosm1125 cosm1180 cosm1190 cosm2000 cosm2010 cosm2020 cosm2030 cosm2040 cosm2050 cosm2060 cosm2070 cosm">
+<div class="department-name">Cosmetology</div>
+<a aria-label="View Cosmetology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=COSM&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+<article class="department-card" data-courses="CRJU1110 CRJU1130 CRJU1140 CRJU1143 CRJU1152 CRJU1162 CRJU1163 CRJU1168 CRJU1175 CRJU2020 CRJU2050 CRJU2060 CRJU2070 CRJU2100 CRJU2110 CRJU2201 CRJU2400" data-department="criminal justice technology" data-prefixes="CRJU" data-search="criminaljusticetechnology crju1110 crju1130 crju1140 crju1143 crju1152 crju1162 crju1163 crju1168 crju1175 crju2020 crju2050 crju2060 crju2070 crju2100 crju2110 crju2201 crju2400 crju">
+<div class="department-name">Criminal Justice Technology</div>
+<a aria-label="View Criminal Justice Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CRJU&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+<article class="department-card" data-courses="CHEF1000 CHEF1110 CHEF1120 CHEF1122 CHEF1124 CHEF1140 CHEF1150 CHEF1170 CHEF1400 CHEF1500 CHEF1510 CHEF1530 CHEF2001 CHEF2010 CHEF2020 CHEF2030 CHEF2040 CHEF2050 CHEF2100 CHEF2250" data-department="culinary arts" data-prefixes="CHEF" data-search="culinaryarts chef1000 chef1110 chef1120 chef1122 chef1124 chef1140 chef1150 chef1170 chef1400 chef1500 chef1510 chef1530 chef2001 chef2010 chef2020 chef2030 chef2040 chef2050 chef2100 chef2250 chef">
+<div class="department-name">Culinary Arts</div>
+<a aria-label="View Culinary Arts syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=CHEF&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="D" id="group-D"><h2 class="letter-heading">D</h2><div class="department-grid">
+<article class="department-card" data-courses="DENA1010 DENA1030 DENA1050 DENA1070 DENA1080 DENA1090 DENA1340 DENA1350 DENA1390 DENA1400 DENA1460 DENA1470 DENA1480" data-department="dental assisting" data-prefixes="DENA" data-search="dentalassisting dena1010 dena1030 dena1050 dena1070 dena1080 dena1090 dena1340 dena1350 dena1390 dena1400 dena1460 dena1470 dena1480 dena">
+<div class="department-name">Dental Assisting</div>
+<a aria-label="View Dental Assisting syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DENA&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="DHYG130 DHYG1000 DHYG1010 DHYG1020 DHYG1030 DHYG1040 DHYG1050 DHYG1070 DHYG1090 DHYG1110 DHYG1111 DHYG1206 DHYG2010 DHYG2020 DHYG2050 DHYG2070 DHYG2080 DHYG2090 DHYG2110 DHYG2140 DHYG2200" data-department="dental hygiene" data-prefixes="DHYG" data-search="dentalhygiene dhyg130 dhyg1000 dhyg1010 dhyg1020 dhyg1030 dhyg1040 dhyg1050 dhyg1070 dhyg1090 dhyg1110 dhyg1111 dhyg1206 dhyg2010 dhyg2020 dhyg2050 dhyg2070 dhyg2080 dhyg2090 dhyg2110 dhyg2140 dhyg2200 dhyg">
+<div class="department-name">Dental Hygiene</div>
+<a aria-label="View Dental Hygiene syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DHYG&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="DMPT1000 DMPT1005 DMPT1010 DMPT1015 DMPT1020 DMPT1025 DMPT1055 DMPT1600 DMPT2100 DMPT2105 DMPT2110 DMPT2115 DMPT2120 DMPT2125 DMPT2130 DMPT2135 DMPT2400 DMPT2410 DMPT2415 DMPT2420 DMPT2600 DMPT2605 DMPT2610 DMPT2615 DMPT2625 DMPT2630 DMPT2640 DMPT2650 DMPT2660 DMPT2700 DMPT2705 DMPT2800 DMPT2805 DMPT2810 DMPT2905 DMPT2930" data-department="design and media production" data-prefixes="DMPT" data-search="designandmediaproduction dmpt1000 dmpt1005 dmpt1010 dmpt1015 dmpt1020 dmpt1025 dmpt1055 dmpt1600 dmpt2100 dmpt2105 dmpt2110 dmpt2115 dmpt2120 dmpt2125 dmpt2130 dmpt2135 dmpt2400 dmpt2410 dmpt2415 dmpt2420 dmpt2600 dmpt2605 dmpt2610 dmpt2615 dmpt2625 dmpt2630 dmpt2640 dmpt2650 dmpt2660 dmpt2700 dmpt2705 dmpt2800 dmpt2805 dmpt2810 dmpt2905 dmpt2930 dmpt">
+<div class="department-name">Design and Media Production</div>
+<a aria-label="View Design and Media Production syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DMPT&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="DIET1000 DIET1010 DIET1020 DIET1030 DIET1040 DIET2000 DIET2010 DIET2020 DIET2021" data-department="diesel equipment technology" data-prefixes="DIET" data-search="dieselequipmenttechnology diet1000 diet1010 diet1020 diet1030 diet1040 diet2000 diet2010 diet2020 diet2021 diet">
+<div class="department-name">Diesel Equipment Technology</div>
+<a aria-label="View Diesel Equipment Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DIET&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="DFTG1015 DFTG1101 DFTG1103 DFTG1105 DFTG1107 DFTG1109 DFTG1111 DFTG1113 DFTG1125 DFTG1127 DFTG1129 DFTG1131 DFTG1133 DFTG1150 DFTG2010 DFTG2020 DFTG2110 DFTG2120 DFTG2130 DFTG2210 DFTG2300 DFTG2400 DFTG2500 DFTG2600" data-department="drafting technology" data-prefixes="DFTG" data-search="draftingtechnology dftg1015 dftg1101 dftg1103 dftg1105 dftg1107 dftg1109 dftg1111 dftg1113 dftg1125 dftg1127 dftg1129 dftg1131 dftg1133 dftg1150 dftg2010 dftg2020 dftg2110 dftg2120 dftg2130 dftg2210 dftg2300 dftg2400 dftg2500 dftg2600 dftg">
+<div class="department-name">Drafting Technology</div>
+<a aria-label="View Drafting Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=DFTG&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="E" id="group-E"><h2 class="letter-heading">E</h2><div class="department-grid">
+<article class="department-card" data-courses="ECCE1101 ECCE1103 ECCE1106 ECCE1112 ECCE1113 ECCE1121 ECCE2115 ECCE2116 ECCE2201 ECCE2202 ECCE2203 ECCE2245 ECCE2246 ECCE2310 ECCE2312 ECCE2320 ECCE2322 ECCE2330 ECCE2332 ECCE2340 ECCE2342 ECCE2360 ECCE2362" data-department="early childhood care &amp; education" data-prefixes="ECCE" data-search="earlychildhoodcare&amp;education ecce1101 ecce1103 ecce1106 ecce1112 ecce1113 ecce1121 ecce2115 ecce2116 ecce2201 ecce2202 ecce2203 ecce2245 ecce2246 ecce2310 ecce2312 ecce2320 ecce2322 ecce2330 ecce2332 ecce2340 ecce2342 ecce2360 ecce2362 ecce">
+<div class="department-name">Early Childhood Care &amp; Education</div>
+<a aria-label="View Early Childhood Care &amp; Education syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ECCE&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ECON1101 ECON2105 ECON2106" data-department="economics" data-prefixes="ECON" data-search="economics econ1101 econ2105 econ2106 econ">
+<div class="department-name">Economics</div>
+<a aria-label="View Economics syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ECON&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ELTR1010 ELTR1020 ELTR1060 ELTR1080 ELTR1090 ELTR1110 ELTR1120 ELTR1180 ELTR1205 ELTR1210 ELTR1220 ELTR1250 ELTR1260 ELTR1270 ELTR1500 ELTR1510 ELTR1525" data-department="electrical systems technology" data-prefixes="ELTR" data-search="electricalsystemstechnology eltr1010 eltr1020 eltr1060 eltr1080 eltr1090 eltr1110 eltr1120 eltr1180 eltr1205 eltr1210 eltr1220 eltr1250 eltr1260 eltr1270 eltr1500 eltr1510 eltr1525 eltr">
+<div class="department-name">Electrical Systems Technology</div>
+<a aria-label="View Electrical Systems Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ELTR&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ELCR1003 ELCR1005 ELCR1010 ELCR1020 ELCR1030 ELCR1040 ELCR1060 ELCR1230 ELCR1240 ELCR1800 ELCR1820 ELCR1840 ELCR1860 ELCR2170 ELCR2180 ELCR2190 ELCR2210 ELCR2220 ELCR2230 ELCR2240 ELCR2250 ELCR2290 ELCR2560 ELCR2590 ELCR2600 ELCR2620 ELCR2680 ELCR2700 ELCR2800 ELCR2860" data-department="electronics electrical technology" data-prefixes="ELCR" data-search="electronicselectricaltechnology elcr1003 elcr1005 elcr1010 elcr1020 elcr1030 elcr1040 elcr1060 elcr1230 elcr1240 elcr1800 elcr1820 elcr1840 elcr1860 elcr2170 elcr2180 elcr2190 elcr2210 elcr2220 elcr2230 elcr2240 elcr2250 elcr2290 elcr2560 elcr2590 elcr2600 elcr2620 elcr2680 elcr2700 elcr2800 elcr2860 elcr">
+<div class="department-name">Electronics Electrical Technology</div>
+<a aria-label="View Electronics Electrical Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ELCR&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ECET1191 ENGT1000 ENGT2300 ENGT2400" data-department="engineering technology" data-prefixes="ENGT" data-search="engineeringtechnology ecet1191 engt1000 engt2300 engt2400 engt">
+<div class="department-name">Engineering Technology</div>
+<a aria-label="View Engineering Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ENGT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ENGL1005 ENGL1010 ENGL1012 ENGL1101 ENGL1102 ENGL1105 ENGL2130" data-department="english" data-prefixes="ENGL" data-search="english engl1005 engl1010 engl1012 engl1101 engl1102 engl1105 engl2130 engl">
+<div class="department-name">English</div>
+<a aria-label="View English syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ENGL&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="ESTH1000 ESTH1010 ESTH1020 ESTH1030 ESTH1040 ESTH1050 ESTH1060 ESTH1070" data-department="esthetics" data-prefixes="ESTH" data-search="esthetics esth1000 esth1010 esth1020 esth1030 esth1040 esth1050 esth1060 esth1070 esth">
+<div class="department-name">Esthetics</div>
+<a aria-label="View Esthetics syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=ESTH&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="F" id="group-F"><h2 class="letter-heading">F</h2><div class="department-grid">
+<article class="department-card" data-courses="FRSC1020 FRSC1030 FRSC1040 FRSC1050 FRSC1060 FRSC1070 FRSC1080 FRSC1100 FRSC1115 FRSC1121 FRSC1132 FRSC1141 FRSC1151 FRSC1161 FRSC2100 FRSC2110 FRSC2120 FRSC2130 FRSC2141 FRSC2170" data-department="fire science technology" data-prefixes="FRSC" data-search="firesciencetechnology frsc1020 frsc1030 frsc1040 frsc1050 frsc1060 frsc1070 frsc1080 frsc1100 frsc1115 frsc1121 frsc1132 frsc1141 frsc1151 frsc1161 frsc2100 frsc2110 frsc2120 frsc2130 frsc2141 frsc2170 frsc">
+<div class="department-name">Fire Science Technology</div>
+<a aria-label="View Fire Science Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=FRSC&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="FYES1001" data-department="first year experience" data-prefixes="FYES" data-search="firstyearexperience fyes1001 fyes">
+<div class="department-name">First Year Experience</div>
+<a aria-label="View First Year Experience syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=FYES&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="FOSC1206 FOSC1210 FOSC2010 FOSC2012 FOSC2028" data-department="forensic science" data-prefixes="FOSC" data-search="forensicscience fosc1206 fosc1210 fosc2010 fosc2012 fosc2028 fosc">
+<div class="department-name">Forensic Science</div>
+<a aria-label="View Forensic Science syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=FOSC&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="G" id="group-G"><h2 class="letter-heading">G</h2><div class="department-grid">
+<article class="department-card" data-courses="GERT1000 GERT1020 GERT1030" data-department="geriatric care" data-prefixes="GERT" data-search="geriatriccare gert1000 gert1020 gert1030 gert">
+<div class="department-name">Geriatric Care</div>
+<a aria-label="View Geriatric Care syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=GERT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="H" id="group-H"><h2 class="letter-heading">H</h2><div class="department-grid">
+<article class="department-card" data-courses="HIMT1100 HIMT1151 HIMT1200 HIMT1250 HIMT1360 HIMT1400 HIMT1410 HIMT2150 HIMT2200 HIMT2300 HIMT2375 HIMT2400 HIMT2410 HIMT2460 HIMT2500 HIMT2600" data-department="health information technology" data-prefixes="HIMT" data-search="healthinformationtechnology himt1100 himt1151 himt1200 himt1250 himt1360 himt1400 himt1410 himt2150 himt2200 himt2300 himt2375 himt2400 himt2410 himt2460 himt2500 himt2600 himt">
+<div class="department-name">Health Information Technology</div>
+<a aria-label="View Health Information Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HIMT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="HECT1100 HECT1120" data-department="hemodialysis" data-prefixes="HECT" data-search="hemodialysis hect1100 hect1120 hect">
+<div class="department-name">Hemodialysis</div>
+<a aria-label="View Hemodialysis syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HECT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="HIST1111 HIST1112 HIST2111 HIST2212" data-department="history" data-prefixes="HIST" data-search="history hist1111 hist1112 hist2111 hist2212 hist">
+<div class="department-name">History</div>
+<a aria-label="View History syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HIST&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="HORT1000 HORT1010 HORT1020 HORT1030 HORT1041 HORT1050 HORT1060 HORT1070 HORT1080 HORT1100 HORT1110 HORT1120 HORT1140 HORT1150 HORT1160 HORT1200 HORT1250 HORT1310 HORT1330 HORT1410 HORT1420 HORT1430 HORT1440 HORT1500 HORT1560 HORT1680 HORT1690 HORT1700 HORT1720 HORT1730 HORT1750 HORT1800 HORT2249 HORT2500" data-department="horticulture" data-prefixes="HORT" data-search="horticulture hort1000 hort1010 hort1020 hort1030 hort1041 hort1050 hort1060 hort1070 hort1080 hort1100 hort1110 hort1120 hort1140 hort1150 hort1160 hort1200 hort1250 hort1310 hort1330 hort1410 hort1420 hort1430 hort1440 hort1500 hort1560 hort1680 hort1690 hort1700 hort1720 hort1730 hort1750 hort1800 hort2249 hort2500 hort">
+<div class="department-name">Horticulture</div>
+<a aria-label="View Horticulture syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HORT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="HRTM1100 HRTM1110 HRTM1120 HRTM1130 HRTM1140 HRTM1150 HRTM1160 HRTM1170 HRTM1201 HRTM1210 HRTM1220 HRTM1230" data-department="hotel restaurant tourism" data-prefixes="HRTM" data-search="hotelrestauranttourism hrtm1100 hrtm1110 hrtm1120 hrtm1130 hrtm1140 hrtm1150 hrtm1160 hrtm1170 hrtm1201 hrtm1210 hrtm1220 hrtm1230 hrtm">
+<div class="department-name">Hotel Restaurant Tourism</div>
+<a aria-label="View Hotel Restaurant Tourism syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HRTM&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="HUMN1100" data-department="humanities" data-prefixes="HUMN" data-search="humanities humn1100 humn">
+<div class="department-name">Humanities</div>
+<a aria-label="View Humanities syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=HUMN&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="I" id="group-I"><h2 class="letter-heading">I</h2><div class="department-grid">
+<article class="department-card" data-courses="IDFC1007 IDFC1011" data-department="industrial fundamentals" data-prefixes="IDFC" data-search="industrialfundamentals idfc1007 idfc1011 idfc">
+<div class="department-name">Industrial Fundamentals</div>
+<a aria-label="View Industrial Fundamental syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=IDFC&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="IDSY1110 IDSY1170 IDSY1220" data-department="industrial systems" data-prefixes="IDSY" data-search="industrialsystems idsy1110 idsy1170 idsy1220 idsy">
+<div class="department-name">Industrial Systems</div>
+<a aria-label="View Industrial Systems syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=IDSY&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="EMPL1000" data-department="interpersonal relations" data-prefixes="EMPL" data-search="interpersonalrelations empl1000 empl">
+<div class="department-name">Interpersonal Relations</div>
+<a aria-label="View Interpersonal Relations syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=EMPL&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="L" id="group-L"><h2 class="letter-heading">L</h2><div class="department-grid">
+<article class="department-card" data-courses="PARA1100 PARA1105 PARA1110 PARA1115 PARA1120 PARA1125 PARA1130 PARA1135 PARA1140 PARA1145 PARA1150 PARA1200 PARA1205 PARA1210 PARA1215 PARA2210 PARA2215" data-department="legal studies" data-prefixes="LGST" data-search="legalstudies para1100 para1105 para1110 para1115 para1120 para1125 para1130 para1135 para1140 para1145 para1150 para1200 para1205 para1210 para1215 para2210 para2215 lgst">
+<div class="department-name">Legal Studies</div>
+<a aria-label="View Paralegal Studies syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=LGST&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article><article class="department-card" data-courses="LOGI1000 LOGI1010 LOGI1015 LOGI1020 LOGI1030 LOGI1110 LOGI1140" data-department="logistics and supply chain" data-prefixes="LOGI" data-search="logisticsandsupplychain logi1000 logi1010 logi1015 logi1020 logi1030 logi1110 logi1140 logi">
+<div class="department-name">Logistics and Supply Chain</div>
+<a aria-label="View Logistics and Supply Chain syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=LOGI&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="M" id="group-M"><h2 class="letter-heading">M</h2><div class="department-grid">
+<article class="department-card" data-courses="MGMT1100 MGMT1105 MGMT1110 MGMT1115 MGMT1120 MGMT1125 MGMT2115 MGMT2120 MGMT2125 MGMT2130 MGMT2140 MGMT2205 MGMT2210 MGMT2215" data-department="management" data-prefixes="MGMT" data-search="management mgmt1100 mgmt1105 mgmt1110 mgmt1115 mgmt1120 mgmt1125 mgmt2115 mgmt2120 mgmt2125 mgmt2130 mgmt2140 mgmt2205 mgmt2210 mgmt2215 mgmt">
+<div class="department-name">Management</div>
+<a aria-label="View Management syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=MGMT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="MKTG1100 MKTG1130 MKTG1160 MKTG1190 MKTG1210 MKTG1270 MKTG1370 MKTG2000 MKTG2010 MKTG2060 MKTG2070 MKTG2090 MKTG2210 MKTG2300 MKTG2500" data-department="marketing" data-prefixes="MKTG" data-search="marketing mktg1100 mktg1130 mktg1160 mktg1190 mktg1210 mktg1270 mktg1370 mktg2000 mktg2010 mktg2060 mktg2070 mktg2090 mktg2210 mktg2300 mktg2500 mktg">
+<div class="department-name">Marketing</div>
+<a aria-label="View Marketing Management syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=MKTG&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="MATH1012 MATH1101 MATH1111 MATH1112 MATH1113 MATH1127" data-department="mathematics" data-prefixes="MATH" data-search="mathematics math1012 math1101 math1111 math1112 math1113 math1127 math">
+<div class="department-name">Mathematics</div>
+<a aria-label="View Mathematics syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=MATH&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<div class="department-card" data-courses="" data-department="mechanical engineering technology" data-prefixes="MEGT" data-search="mechanicalengineeringtechnology megt"><div class="department-name">Mechanical Engineering Technology</div><a aria-label="View Mechanical Engineering Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=MEGT&amp;template=templates" rel="noopener noreferrer" target="_blank">View Syllabi</a></div><article class="department-card" data-courses="MAST1010 MAST1030 MAST1060 MAST1080 MAST1090 MAST1100 MAST1110 MAST1120 MAST1170 MAST1180" data-department="medical assisting" data-prefixes="MAST" data-search="medicalassisting mast1010 mast1030 mast1060 mast1080 mast1090 mast1100 mast1110 mast1120 mast1170 mast1180 mast">
+<div class="department-name">Medical Assisting</div>
+<a aria-label="View Medical Assisting syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=MAST&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="N" id="group-N"><h2 class="letter-heading">N</h2><div class="department-grid">
+<article class="department-card" data-courses="IMSA1100 NAST1100 NAST2100 PCTA1100 PNSG2010 PNSG2030 PNSG2035 PNSG2210 PNSG2220 PNSG2230 PNSG2240 PNSG2250 PNSG2255 PNSG2310 PNSG2320 PNSG2330 PNSG2340 PNSG2410 PNSG2415 RNSG1300 RNSG1302 RNSG1304 RNSG1306 RNSG1308 RNSG1312 RNSG2300 RNSG2302 RNSG2304 RNSG2306 RNSG2308 RNSG2310" data-department="nursing" data-prefixes="NAST PNSG RNSG" data-search="nursing imsa1100 nast1100 nast2100 pcta1100 pnsg2010 pnsg2030 pnsg2035 pnsg2210 pnsg2220 pnsg2230 pnsg2240 pnsg2250 pnsg2255 pnsg2310 pnsg2320 pnsg2330 pnsg2340 pnsg2410 pnsg2415 rnsg1300 rnsg1302 rnsg1304 rnsg1306 rnsg1308 rnsg1312 rnsg2300 rnsg2302 rnsg2304 rnsg2306 rnsg2308 rnsg2310 nast pnsg rnsg">
+<div class="department-name">Nursing</div>
+<div class="department-links"><a aria-label="View Nursing NAST syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=NAST&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">NAST Syllabi</a><a aria-label="View Nursing PNSG syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PNSG&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">PNSG Syllabi</a><a aria-label="View Nursing RNSG syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=RNSG&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">RNSG Syllabi</a></div></article>
+</div></section>
+<section class="letter-group" data-letter="P" id="group-P"><h2 class="letter-heading">P</h2><div class="department-grid">
+<article class="department-card" data-courses="EMSP1010 EMSP1110 EMSP1120 EMSP1130 EMSP1140 EMSP1150 EMSP1160 EMSP1510 EMSP1520 EMSP1530 EMSP1540 EMSP2110 EMSP2120 EMSP2130 EMSP2140 EMSP2310 EMSP2320 EMSP2330 EMSP2340 EMSP2510 EMSP2520 EMSP2530 EMSP2540 EMSP2550 EMSP2560 EMSP2570 EMSP2710 EMSP2720" data-department="paramedicine" data-prefixes="EMSP" data-search="paramedicine emsp1010 emsp1110 emsp1120 emsp1130 emsp1140 emsp1150 emsp1160 emsp1510 emsp1520 emsp1530 emsp1540 emsp2110 emsp2120 emsp2130 emsp2140 emsp2310 emsp2320 emsp2330 emsp2340 emsp2510 emsp2520 emsp2530 emsp2540 emsp2550 emsp2560 emsp2570 emsp2710 emsp2720 emsp">
+<div class="department-name">Paramedicine</div>
+<a aria-label="View Paramedicine syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=EMSP&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PHAR1000 PHAR1010 PHAR1020 PHAR1030 PHAR1040 PHAR1050 PHAR1055 PHAR2060 PHAR2070" data-department="pharmacy technology" data-prefixes="PHAR" data-search="pharmacytechnology phar1000 phar1010 phar1020 phar1030 phar1040 phar1050 phar1055 phar2060 phar2070 phar">
+<div class="department-name">Pharmacy Technology</div>
+<a aria-label="View Pharmacy Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PHAR&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PHLT1030 PHLT1050" data-department="phlebotomy" data-prefixes="PHLT" data-search="phlebotomy phlt1030 phlt1050 phlt">
+<div class="department-name">Phlebotomy</div>
+<a aria-label="View Phlebotomy syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PHLT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PHOT1000 PHOT1102 PHOT1103 PHOT1104 PHOT1105 PHOT1122 PHOT1123 PHOT1124 PHOT1125 PHOT1126 PHOT2101 PHOT2103 PHOT2106 PHOT2121 PHOT2122 PHOT2123 PHOT2125 PHOT2126 PHOT2131" data-department="photography" data-prefixes="PHOT" data-search="photography phot1000 phot1102 phot1103 phot1104 phot1105 phot1122 phot1123 phot1124 phot1125 phot1126 phot2101 phot2103 phot2106 phot2121 phot2122 phot2123 phot2125 phot2126 phot2131 phot">
+<div class="department-name">Photography</div>
+<a aria-label="View Photography syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PHOT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PHTA1110 PHTA1120 PHTA1130 PHTA1140 PHTA2110 PHTA2120 PHTA2130 PHTA2140 PHTA2150 PHTA2160 PHTA2170 PHTA2180 PHTA2190 PHTA2200" data-department="physical therapist assistant" data-prefixes="PHTA" data-search="physicaltherapistassistant phta1110 phta1120 phta1130 phta1140 phta2110 phta2120 phta2130 phta2140 phta2150 phta2160 phta2170 phta2180 phta2190 phta2200 phta">
+<div class="department-name">Physical Therapist Assistant</div>
+<a aria-label="View Physical Therapist Assistant syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PHTA&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PHYS1110 PHYS1110L PHYS1111 PHYS1111L PHYS1112 PHYS1112L" data-department="physics" data-prefixes="PHYS" data-search="physics phys1110 phys1110l phys1111 phys1111l phys1112 phys1112l phys">
+<div class="department-name">Physics</div>
+<a aria-label="View Physics syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PHYS&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PLBG1000 PLBG1070 PLBG1160 PLBG1210 PLBG1220 PLBG1240 PLBG1260 PLBG1280 PLBG1310 PLBG1320 PLBG1330 PLBG1500" data-department="plumbing" data-prefixes="PLBG" data-search="plumbing plbg1000 plbg1070 plbg1160 plbg1210 plbg1220 plbg1240 plbg1260 plbg1280 plbg1310 plbg1320 plbg1330 plbg1500 plbg">
+<div class="department-name">Plumbing</div>
+<a aria-label="View Plumbing syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PLBG&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="POLS1101" data-department="political science" data-prefixes="POLS" data-search="politicalscience pols1101 pols">
+<div class="department-name">Political Science</div>
+<a aria-label="View Political Science syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=POLS&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="PSYC1010 PSYC1101 PSYC1150 PSYC2103 PSYC2250" data-department="psychology" data-prefixes="PSYC" data-search="psychology psyc1010 psyc1101 psyc1150 psyc2103 psyc2250 psyc">
+<div class="department-name">Psychology</div>
+<a aria-label="View Psychology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=PSYC&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="R" id="group-R"><h2 class="letter-heading">R</h2><div class="department-grid">
+<article class="department-card" data-courses="MRIM2300 MRIM2320 MRIM2330 MRIM2350 MRIM2360 MRIM2370 RADT1010 RADT1030 RADT1060 RADT1065 RADT1075 RADT1085 RADT1200 RADT1320 RADT1330 RADT2090 RADT2260 RADT2340 RADT2360 RADT2520 RADT2530" data-department="radiologic technology" data-prefixes="RADT" data-search="radiologictechnology mrim2300 mrim2320 mrim2330 mrim2350 mrim2360 mrim2370 radt1010 radt1030 radt1060 radt1065 radt1075 radt1085 radt1200 radt1320 radt1330 radt2090 radt2260 radt2340 radt2360 radt2520 radt2530 radt">
+<div class="department-name">Radiologic Technology</div>
+<a aria-label="View Radiologic Technology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=RADT&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="S" id="group-S"><h2 class="letter-heading">S</h2><div class="department-grid">
+<article class="department-card" data-courses="SOCI1101 SOCI2600" data-department="sociology" data-prefixes="SOCI" data-search="sociology soci1101 soci2600 soci">
+<div class="department-name">Sociology</div>
+<a aria-label="View Sociology syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=SOCI&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="SPAN1101 SPAN1102" data-department="spanish" data-prefixes="SPAN" data-search="spanish span1101 span1102 span">
+<div class="department-name">Spanish</div>
+<a aria-label="View Spanish syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=SPAN&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="SPCH1101" data-department="speech" data-prefixes="SPCH" data-search="speech spch1101 spch">
+<div class="department-name">Speech</div>
+<a aria-label="View Speech syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=SPCH&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+<article class="department-card" data-courses="SCMA1000 SCMA1003 SCMA1008 SCMA1009 SCMA1015 SCMA2103 SCMA2105 SCMA2106 SCMA2108 SCMA2200" data-department="supply chain procurement" data-prefixes="SCMA" data-search="supplychainprocurement scma1000 scma1003 scma1008 scma1009 scma1015 scma2103 scma2105 scma2106 scma2108 scma2200 scma">
+<div class="department-name">Supply Chain Procurement</div>
+<a aria-label="View Supply Chain Procurement syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=SCMA&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+<section class="letter-group" data-letter="W" id="group-W"><h2 class="letter-heading">W</h2><div class="department-grid">
+<article class="department-card" data-courses="WELD1000 WELD1010 WELD1030 WELD1040 WELD1050 WELD1060 WELD1070 WELD1090 WELD1110 WELD1120 WELD1150 WELD1151 WELD1152 WELD1153 WELD1154 WELD1156 WELD1330 WELD1500" data-department="welding and joining" data-prefixes="WELD" data-search="weldingandjoining weld1000 weld1010 weld1030 weld1040 weld1050 weld1060 weld1070 weld1090 weld1110 weld1120 weld1150 weld1151 weld1152 weld1153 weld1154 weld1156 weld1330 weld1500 weld">
+<div class="department-name">Welding and Joining</div>
+<a aria-label="View Welding and Joining syllabi in Concourse" class="department-link" href="https://atlantatech.campusconcourse.com/search?search_performed=1&amp;prefix=WELD&amp;timeframe=current_future&amp;template=templates" rel="noopener noreferrer" target="_blank">
+             View Syllabi
+          </a>
+</article>
+</div></section>
+</div>
+<div aria-live="polite" class="no-results" id="noResults" role="status">No programs match your search.</div>
+</main>
+<script>
+(function () {
+  var box = document.getElementById("searchBox");
+  var cards = document.querySelectorAll(".department-card");
+  var groups = document.querySelectorAll(".letter-group");
+  var noResults = document.getElementById("noResults");
+  var alphabetNav = document.querySelector(".alphabet-nav");
+
+  if (!box) return;
+
+  function normalize(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[\s\-_.]/g, "");
+  }
+
+  function runSearch() {
+    var query = normalize(box.value);
+    var visibleCount = 0;
+    var i, j, card, group, groupCards, groupHasMatch;
+
+    for (i = 0; i < cards.length; i++) {
+      card = cards[i];
+
+      var searchableText = card.getAttribute("data-search") || "";
+      var match = !query || searchableText.indexOf(query) !== -1;
+
+      card.style.display = match ? "" : "none";
+
+      if (match) {
+        visibleCount++;
+      }
+    }
+
+    for (i = 0; i < groups.length; i++) {
+      group = groups[i];
+      groupCards = group.querySelectorAll(".department-card");
+      groupHasMatch = false;
+
+      for (j = 0; j < groupCards.length; j++) {
+        if (groupCards[j].style.display !== "none") {
+          groupHasMatch = true;
+          break;
+        }
+      }
+
+      group.style.display = groupHasMatch ? "" : "none";
+    }
+
+    if (noResults) {
+      noResults.style.display = visibleCount ? "none" : "block";
+    }
+
+    if (alphabetNav) {
+      alphabetNav.style.display = query ? "none" : "flex";
+    }
+  }
+
+  box.addEventListener("input", runSearch);
+  box.addEventListener("keyup", runSearch);
+  box.addEventListener("search", runSearch);
+})();
+</script>
+</body>
+</html>
